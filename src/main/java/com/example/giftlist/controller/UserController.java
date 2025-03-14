@@ -6,7 +6,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -34,14 +34,8 @@ public class UserController {
         return  userService.createUser(user);
     }
     @PutMapping("/{id}")
-    public List<User> updateUser(@PathVariable Long id, @RequestBody User user) {
-        User userExist = userService.findUserById(id);
-        if(userExist == null){
-            return null;
-        }
-        user.setId(id);
-        User updatedUser = userService.updateUser(user);
-        return Arrays.asList(updatedUser);
+    public User updateUser(@PathVariable Long id, @RequestBody User user) {
+        return userService.updateUser(id, user);
     }
 
     @DeleteMapping("/{id}")

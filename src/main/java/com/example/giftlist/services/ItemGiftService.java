@@ -2,6 +2,7 @@ package com.example.giftlist.services;
 
 import com.example.giftlist.entity.ItemGift;
 import com.example.giftlist.entity.ListGift;
+import com.example.giftlist.entity.User;
 import com.example.giftlist.repository.ItemGiftRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,10 @@ public class ItemGiftService {
 
     @Autowired
     ItemGiftRepository itemGiftRepository;
+    @Autowired
+    ListGiftService listGiftService;
+    @Autowired
+    UserService userService;
 
     public ItemGift createItem(ItemGift itemGift) {
         return itemGiftRepository.save(itemGift);
@@ -27,9 +32,12 @@ public class ItemGiftService {
         return itemGiftRepository.findById(id);
     }
 
-    public ItemGift updateItem(Long id, ItemGift updatedItem) {
-        Optional<ItemGift> item = findItemById(id);
-        updatedItem.setId(id);
+    public ItemGift updateItem(Long itemId, Long listId, Long userId, ItemGift updatedItem) {
+        ListGift existList = listGiftService.findListById(listId).orElseThrow(() -> new RuntimeException(""));
+        User existUser = userService.findUserById(userId);
+        updatedItem.setId(itemId);
+        updatedItem.setListId(existList);
+        updatedItem.setPurchasedBy(existUser);
         return itemGiftRepository.save(updatedItem);
     }
 

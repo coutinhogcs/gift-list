@@ -26,7 +26,9 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User updateUser(User user){
+    public User updateUser(Long id, User user){
+        User existUser = userRepository.findById(id).orElseThrow(() -> new RuntimeException("Não existe usuário com esse ID"));
+        user.setId(id);
         return userRepository.save(user);
     }
 

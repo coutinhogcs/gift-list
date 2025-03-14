@@ -35,25 +35,16 @@ public class ListGiftController {
 
 
     @PostMapping("/{userId}")
-    public ResponseEntity<ListGift> createList(@PathVariable Long userId, @RequestBody ListGift listGift) {
+    public ListGift createList(@PathVariable Long userId, @RequestBody ListGift listGift) {
         User user = userService.findUserById(userId);
-        if (user == null){
-            return ResponseEntity.notFound().build();
-        }
         listGift.setUser(user);
-        ListGift createdList = listGiftService.createList(listGift);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdList);
+        return listGiftService.createList(listGift);
     }
 
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<ListGift> updateList(@PathVariable Long id, @RequestBody ListGift updatedList) {
-        ListGift updated = listGiftService.updateList(id, updatedList);
-        if (updated != null) {
-            return ResponseEntity.ok(updated);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public ListGift updateList(@PathVariable Long id, @RequestBody ListGift updatedList) {
+        return listGiftService.updateList(id, updatedList);
     }
 
 

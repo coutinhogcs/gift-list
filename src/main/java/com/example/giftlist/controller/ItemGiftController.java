@@ -50,12 +50,7 @@ public class ItemGiftController {
     @PutMapping("/{itemId}/{listId}/{purchasedByUserId}")
     @Transactional
     public ItemGift updateItem(@PathVariable Long itemId, @PathVariable Long listId, @PathVariable Long purchasedByUserId, @RequestBody ItemGift updatedItem) {
-        ListGift list = listGiftService.findListById(listId)
-                .orElseThrow(() -> new RuntimeException("Não tem nenhuma lista"));
-        User userList = userService.findUserById(purchasedByUserId);
-        updatedItem.setListId(list);
-        updatedItem.setPurchasedBy(userList);
-        return itemGiftService.updateItem(itemId, updatedItem);
+        return itemGiftService.updateItem(itemId, listId, purchasedByUserId, updatedItem);
     }
 
     @DeleteMapping("/{id}")
