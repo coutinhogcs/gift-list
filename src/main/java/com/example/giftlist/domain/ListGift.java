@@ -1,4 +1,4 @@
-package com.example.giftlist.entity;
+package com.example.giftlist.domain;
 //
 //id: Identificador único da lista.
 //user_id: Chave estrangeira que referencia o usuário que criou a lista.

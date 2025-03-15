@@ -1,7 +1,6 @@
 package com.example.giftlist.repository;
 
-import com.example.giftlist.entity.ListGift;
-import jakarta.persistence.Entity;
+import com.example.giftlist.domain.ListGift;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

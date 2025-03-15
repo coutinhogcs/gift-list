@@ -1,8 +1,8 @@
 package com.example.giftlist.controller;
 
-import com.example.giftlist.entity.ItemGift;
-import com.example.giftlist.entity.ListGift;
-import com.example.giftlist.entity.User;
+import com.example.giftlist.domain.ItemGift;
+import com.example.giftlist.domain.ListGift;
+import com.example.giftlist.domain.User;
 import com.example.giftlist.services.ItemGiftService;
 import com.example.giftlist.services.ListGiftService;
 import com.example.giftlist.services.UserService;

@@ -1,10 +1,9 @@
 package com.example.giftlist.services;
 
-import com.example.giftlist.entity.User;
+import com.example.giftlist.domain.User;
 import com.example.giftlist.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,7 +15,7 @@ public class UserService {
 
     public User findUserById(Long id) {
         Optional<User> optionalUser = userRepository.findById(id);
-        return optionalUser.orElse(null);
+        return optionalUser.orElseThrow(() -> new RuntimeException("Não existe usuário com este id: " + id));
     }
     public User createUser(User user){
         return userRepository.save(user);

@@ -1,6 +1,6 @@
 package com.example.giftlist.services;
 
-import com.example.giftlist.entity.ListGift;
+import com.example.giftlist.domain.ListGift;
 import com.example.giftlist.repository.ListGiftRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

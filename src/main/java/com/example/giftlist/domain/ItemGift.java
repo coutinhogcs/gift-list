@@ -1,4 +1,4 @@
-package com.example.giftlist.entity;
+package com.example.giftlist.domain;
 
 import jakarta.persistence.*;
 

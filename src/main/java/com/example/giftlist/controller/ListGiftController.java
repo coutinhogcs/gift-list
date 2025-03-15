@@ -1,13 +1,11 @@
 package com.example.giftlist.controller;
 
-import com.example.giftlist.entity.ListGift;
-import com.example.giftlist.entity.User;
+import com.example.giftlist.domain.ListGift;
+import com.example.giftlist.domain.User;
 import com.example.giftlist.services.ListGiftService;
 import com.example.giftlist.services.UserService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
