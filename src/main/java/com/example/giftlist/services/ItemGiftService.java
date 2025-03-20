@@ -20,7 +20,11 @@ public class ItemGiftService {
     @Autowired
     UserService userService;
 
-    public ItemGift createItem(ItemGift itemGift) {
+    public ItemGift createItem(Long listId, Long userId, ItemGift itemGift) {
+        User findUser = userService.findUserById(userId);
+        ListGift findList = listGiftService.findListById(listId);
+        itemGift.setPurchasedBy(findUser);
+        itemGift.setListId(findList);
         return itemGiftRepository.save(itemGift);
     }
 
@@ -33,7 +37,7 @@ public class ItemGiftService {
     }
 
     public ItemGift updateItem(Long itemId, Long listId, Long userId, ItemGift updatedItem) {
-        ListGift existList = listGiftService.findListById(listId).orElseThrow(() -> new RuntimeException(""));
+        ListGift existList = listGiftService.findListById(listId);
         User existUser = userService.findUserById(userId);
         updatedItem.setId(itemId);
         updatedItem.setListId(existList);

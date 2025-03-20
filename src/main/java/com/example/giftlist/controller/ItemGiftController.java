@@ -8,6 +8,8 @@ import com.example.giftlist.services.ListGiftService;
 import com.example.giftlist.services.UserService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,8 +28,12 @@ public class ItemGiftController {
     private UserService userService;
 
     @GetMapping
-    public List<ItemGift> findAll() {
-        return itemGiftService.findAll();
+    public ResponseEntity<List<ItemGift>> findAll() {
+        List<ItemGift> itemGiftList = itemGiftService.findAll();
+        if(itemGiftList.isEmpty()){
+            return new ResponseEntity<>(itemGiftList, HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(itemGiftList, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -37,26 +43,23 @@ public class ItemGiftController {
 
     @PostMapping("/{listId}/{purchasedByUserId}")
     @Transactional
-    public ItemGift createItem(@PathVariable Long listId, @PathVariable Long purchasedByUserId, @RequestBody ItemGift itemGift) {
-        ListGift list = listGiftService.findListById(listId)
-                .orElseThrow(() -> new RuntimeException("Erro"));
-        User userList = userService.findUserById(purchasedByUserId);
-        itemGift.setListId(list);
-        itemGift.setPurchasedBy(userList);
-
-        return itemGiftService.createItem(itemGift);
+    public ResponseEntity<ItemGift>  createItem(@PathVariable Long listId, @PathVariable Long purchasedByUserId, @RequestBody ItemGift itemGift) {
+        ItemGift createItem = itemGiftService.createItem(listId, purchasedByUserId, itemGift);
+        return new ResponseEntity<>(createItem, HttpStatus.CREATED);
     }
 
     @PutMapping("/{itemId}/{listId}/{purchasedByUserId}")
     @Transactional
-    public ItemGift updateItem(@PathVariable Long itemId, @PathVariable Long listId, @PathVariable Long purchasedByUserId, @RequestBody ItemGift updatedItem) {
-        return itemGiftService.updateItem(itemId, listId, purchasedByUserId, updatedItem);
+    public ResponseEntity<ItemGift> updateItem(@PathVariable Long itemId, @PathVariable Long listId, @PathVariable Long purchasedByUserId, @RequestBody ItemGift updatedItem) {
+         ItemGift updateItem = itemGiftService.updateItem(itemId, listId, purchasedByUserId, updatedItem);
+        return new ResponseEntity<>(updateItem, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
     @Transactional
-    public void deleteItem(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteItem(@PathVariable Long id) {
         itemGiftService.deleteItem(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }
